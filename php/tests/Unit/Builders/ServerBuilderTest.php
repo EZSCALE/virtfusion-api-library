@@ -79,7 +79,7 @@ class ServerBuilderTest extends TestCase
 
         $this->assertTrue($result->success);
         $this->assertSame('DELETE', $this->lastRequestMethod());
-        $this->assertSame(30, $this->lastRequestBody()['delay']);
+        $this->assertStringContainsString('delay=30', $this->lastRequestUri());
     }
 
     public function test_build(): void

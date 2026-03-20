@@ -15,10 +15,10 @@ class HypervisorGroupsBuilder
     ) {
     }
 
-    public function list(int $page = 1): PaginatedResponse
+    public function list(int $results = 20): PaginatedResponse
     {
         $data = $this->http->request('GET', 'compute/hypervisors/groups', [
-            'query' => ['page' => $page],
+            'query' => ['results' => $results],
         ]);
 
         return PaginatedResponse::fromArray(

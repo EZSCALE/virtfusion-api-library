@@ -27,7 +27,7 @@ readonly class SshKey
         return new self(
             id: $data['id'],
             name: $data['name'] ?? '',
-            publicKey: $data['publicKey'] ?? null,
+            publicKey: $data['publicKey'] ?? $data['public'] ?? null,
             type: $data['type'] ?? '',
             enabled: $data['enabled'] ?? true,
             raw: $data,

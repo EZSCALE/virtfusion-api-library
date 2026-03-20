@@ -1,14 +1,25 @@
 {
     "data": [
         {
-            "id": 10,
-            "type": "storage",
-            "name": "SSD Pool 1"
+            "hypervisor": {
+                "id": 10,
+                "name": "hv-us-1",
+                "enabled": true
+            },
+            "resources": {
+                "servers": {"total": 50, "used": 10},
+                "memory": {"total": 262144, "used": 65536}
+            }
         },
         {
-            "id": 11,
-            "type": "network",
-            "name": "VLAN 100"
+            "hypervisor": {
+                "id": 11,
+                "name": "hv-eu-1",
+                "enabled": true
+            },
+            "resources": {
+                "servers": {"total": 30, "used": 5}
+            }
         }
     ],
     "current_page": 1,

@@ -12,7 +12,7 @@ readonly class Server
     public function __construct(
         public int $id,
         public string $name,
-        public string $hostname,
+        public ?string $hostname,
         public string $state,
         public ?int $packageId,
         public ?string $primaryIp,
@@ -28,7 +28,7 @@ readonly class Server
         return new self(
             id: $data['id'],
             name: $data['name'] ?? '',
-            hostname: $data['hostname'] ?? '',
+            hostname: $data['hostname'] ?? null,
             state: $data['state'] ?? '',
             packageId: $data['packageId'] ?? $data['package_id'] ?? null,
             primaryIp: $data['primaryIp'] ?? $data['primary_ip'] ?? null,

@@ -58,7 +58,7 @@ class ServerBuilder
     public function delete(int $delay = 0): ActionResult
     {
         $data = $this->http->request('DELETE', "servers/{$this->serverId}", [
-            'json' => ['delay' => $delay],
+            'query' => ['delay' => $delay],
         ]);
 
         return ActionResult::fromArray($data);

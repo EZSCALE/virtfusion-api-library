@@ -33,9 +33,9 @@ class HypervisorGroupBuilderTest extends TestCase
         $this->assertInstanceOf(PaginatedResponse::class, $response);
         $this->assertCount(2, $response->items);
         $this->assertInstanceOf(HypervisorGroupResource::class, $response->items[0]);
-        $this->assertSame(10, $response->items[0]->id);
-        $this->assertSame('storage', $response->items[0]->type);
-        $this->assertSame('SSD Pool 1', $response->items[0]->name);
+        $this->assertSame(10, $response->items[0]->hypervisorId);
+        $this->assertSame('hv-us-1', $response->items[0]->hypervisorName);
+        $this->assertArrayHasKey('servers', $response->items[0]->resources);
         $this->assertStringContainsString('/compute/hypervisors/groups/3/resources', $this->lastRequestUri());
     }
 }
