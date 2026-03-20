@@ -155,7 +155,7 @@ try {
 
 ## API Reference
 
-See [API_REFERENCE.md](API_REFERENCE.md) for the complete VirtFusion API specification.
+See [API_REFERENCE.md](../API_REFERENCE.md) for the complete VirtFusion API specification.
 
 ## License
 

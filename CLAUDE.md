@@ -6,7 +6,7 @@
 - Future: `python/`, `node/`
 
 ## API Reference
-- **`php/API_REFERENCE.md`** — Complete VirtFusion API specification (84 endpoints, 19 resource categories), generated from the official OpenAPI spec. Use this as the source of truth for endpoint paths, parameters, and response shapes.
+- **`API_REFERENCE.md`** — Complete VirtFusion API specification (84 endpoints, 19 resource categories), generated from the official OpenAPI spec. Use this as the source of truth for endpoint paths, parameters, and response shapes.
 
 ## PHP SDK Conventions
 - PHP 8.2+ with readonly classes, match expressions, constructor promotion
