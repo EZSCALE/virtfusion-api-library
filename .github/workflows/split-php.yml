@@ -25,6 +25,11 @@ jobs:
           private-key: ${{ secrets.SPLIT_APP_PRIVATE_KEY }}
           owner: EZSCALE
 
+      - name: Verify token has access
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: gh api repos/EZSCALE/virtfusion-php --jq '.permissions'
+
       - name: Split and push
         env:
           TOKEN: ${{ steps.app-token.outputs.token }}
