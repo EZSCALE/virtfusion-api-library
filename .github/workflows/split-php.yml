@@ -24,7 +24,6 @@ jobs:
           app-id: ${{ secrets.SPLIT_APP_ID }}
           private-key: ${{ secrets.SPLIT_APP_PRIVATE_KEY }}
           owner: EZSCALE
-          repositories: virtfusion-php
 
       - name: Split and push
         env:
