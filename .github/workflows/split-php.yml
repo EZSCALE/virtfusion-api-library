@@ -27,8 +27,9 @@ jobs:
           repositories: virtfusion-php
 
       - name: Split and push
-        uses: splitsh/lite-action@v2.0.0
-        with:
-          source: 'php/'
-          target_repo: 'https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/EZSCALE/virtfusion-php.git'
-          target_branch: 'main'
+        env:
+          TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          SHA=$(git subtree split --prefix=php/ HEAD)
+          git remote add target "https://x-access-token:${TOKEN}@github.com/EZSCALE/virtfusion-php.git"
+          git push target "${SHA}:refs/heads/main" --force
