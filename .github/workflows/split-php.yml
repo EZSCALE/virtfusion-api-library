@@ -25,11 +25,19 @@ jobs:
           private-key: ${{ secrets.SPLIT_APP_PRIVATE_KEY }}
           owner: EZSCALE
 
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          repository: EZSCALE/virtfusion-php
+          token: ${{ steps.app-token.outputs.token }}
+          path: target-repo
+          fetch-depth: 0
+
       - name: Split and push
-        env:
-          TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
-          git config --global credential.helper store
-          echo "https://x-access-token:${TOKEN}@github.com" > ~/.git-credentials
+          cd "$GITHUB_WORKSPACE"
           SHA=$(git subtree split --prefix=php/ HEAD)
-          git push "https://github.com/EZSCALE/virtfusion-php.git" "${SHA}:refs/heads/main" --force
+          cd target-repo
+          git fetch "$GITHUB_WORKSPACE" "${SHA}"
+          git checkout -B main "${SHA}"
+          git push origin main --force
