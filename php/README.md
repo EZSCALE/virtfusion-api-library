@@ -155,7 +155,7 @@ try {
 
 ## API Reference
 
-See [API_REFERENCE.md](../API_REFERENCE.md) for the complete VirtFusion API specification.
+See the [API Reference](https://github.com/EZSCALE/virtfusion-api-library/blob/main/API_REFERENCE.md) for the complete VirtFusion API specification.
 
 ## License
 
