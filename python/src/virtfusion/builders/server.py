@@ -6,6 +6,8 @@ from .._helpers import unwrap_data, unwrap_list
 from .._http import HttpClient
 from ..models.action_result import ActionResult
 from ..models.server import Server
+from .server_firewall import ServerFirewallBuilder
+from .server_traffic_blocks import ServerTrafficBlocksBuilder
 
 
 class ServerBuilder:
@@ -202,7 +204,3 @@ class ServerBuilder:
     def traffic_blocks(self) -> ServerTrafficBlocksBuilder:
         return ServerTrafficBlocksBuilder(self._http, self._server_id)
 
-
-# Avoid circular imports by importing at the bottom
-from .server_firewall import ServerFirewallBuilder  # noqa: E402
-from .server_traffic_blocks import ServerTrafficBlocksBuilder  # noqa: E402
