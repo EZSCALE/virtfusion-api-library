@@ -2,6 +2,8 @@
 
 Official SDK wrappers for the [VirtFusion](https://virtfusion.com) hosting API, maintained by [EZScale](https://ezscale.cloud).
 
+Built for **VirtFusion 6.2** (API v1).
+
 ## Available SDKs
 
 | Language | Package | Status |

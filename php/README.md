@@ -1,6 +1,6 @@
 # VirtFusion PHP SDK
 
-PHP SDK for the [VirtFusion](https://virtfusion.com) hosting API.
+PHP SDK for the [VirtFusion](https://virtfusion.com) hosting API. Built for **VirtFusion 6.2** (API v1).
 
 ## Requirements
 
