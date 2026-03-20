@@ -21,7 +21,7 @@ class HypervisorGroupBuilderTest extends TestCase
         $this->assertSame(3, $group->id);
         $this->assertSame('AP South', $group->name);
         $this->assertSame('Asia Pacific cluster', $group->description);
-        $this->assertStringContainsString('/hypervisor-groups/3', $this->lastRequestUri());
+        $this->assertStringContainsString('/compute/hypervisors/groups/3', $this->lastRequestUri());
     }
 
     public function test_resources_returns_paginated_response(): void
@@ -36,6 +36,6 @@ class HypervisorGroupBuilderTest extends TestCase
         $this->assertSame(10, $response->items[0]->id);
         $this->assertSame('storage', $response->items[0]->type);
         $this->assertSame('SSD Pool 1', $response->items[0]->name);
-        $this->assertStringContainsString('/hypervisor-groups/3/resources', $this->lastRequestUri());
+        $this->assertStringContainsString('/compute/hypervisors/groups/3/resources', $this->lastRequestUri());
     }
 }

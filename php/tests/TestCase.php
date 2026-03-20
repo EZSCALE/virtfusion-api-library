@@ -79,7 +79,9 @@ abstract class TestCase extends BaseTestCase
      */
     protected function lastRequestBody(): array
     {
-        $body = end($this->history)['request']->getBody()->getContents();
+        $stream = end($this->history)['request']->getBody();
+        $stream->rewind();
+        $body = $stream->getContents();
 
         return json_decode($body, true) ?? [];
     }

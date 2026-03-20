@@ -38,7 +38,7 @@ class ServerBuilderTest extends TestCase
         $this->assertInstanceOf(ActionResult::class, $result);
         $this->assertTrue($result->success);
         $this->assertSame('POST', $this->lastRequestMethod());
-        $this->assertStringContainsString('/servers/69/boot', $this->lastRequestUri());
+        $this->assertStringContainsString('/servers/69/power/boot', $this->lastRequestUri());
     }
 
     public function test_shutdown(): void
@@ -48,7 +48,7 @@ class ServerBuilderTest extends TestCase
         $result = $vf->server(69)->shutdown();
 
         $this->assertTrue($result->success);
-        $this->assertStringContainsString('/servers/69/shutdown', $this->lastRequestUri());
+        $this->assertStringContainsString('/servers/69/power/shutdown', $this->lastRequestUri());
     }
 
     public function test_restart(): void
@@ -58,7 +58,7 @@ class ServerBuilderTest extends TestCase
         $result = $vf->server(69)->restart();
 
         $this->assertTrue($result->success);
-        $this->assertStringContainsString('/servers/69/restart', $this->lastRequestUri());
+        $this->assertStringContainsString('/servers/69/power/restart', $this->lastRequestUri());
     }
 
     public function test_power_off(): void
@@ -68,7 +68,7 @@ class ServerBuilderTest extends TestCase
         $result = $vf->server(69)->powerOff();
 
         $this->assertTrue($result->success);
-        $this->assertStringContainsString('/servers/69/power-off', $this->lastRequestUri());
+        $this->assertStringContainsString('/servers/69/power/poweroff', $this->lastRequestUri());
     }
 
     public function test_delete_with_delay(): void
@@ -100,7 +100,8 @@ class ServerBuilderTest extends TestCase
         $result = $vf->server(69)->changePackage(5);
 
         $this->assertTrue($result->success);
-        $this->assertSame(5, $this->lastRequestBody()['packageId']);
+        $this->assertSame('PUT', $this->lastRequestMethod());
+        $this->assertStringContainsString('/servers/69/package/5', $this->lastRequestUri());
     }
 
     public function test_modify_backup_plan(): void
@@ -110,7 +111,8 @@ class ServerBuilderTest extends TestCase
         $result = $vf->server(69)->modifyBackupPlan(2);
 
         $this->assertTrue($result->success);
-        $this->assertSame(2, $this->lastRequestBody()['planId']);
+        $this->assertSame('PUT', $this->lastRequestMethod());
+        $this->assertStringContainsString('/servers/69/backups/plan/2', $this->lastRequestUri());
     }
 
     public function test_add_to_whitelist(): void
@@ -121,7 +123,7 @@ class ServerBuilderTest extends TestCase
 
         $this->assertTrue($result->success);
         $this->assertSame('POST', $this->lastRequestMethod());
-        $this->assertStringContainsString('/servers/69/whitelist', $this->lastRequestUri());
+        $this->assertStringContainsString('/servers/69/networkWhitelist', $this->lastRequestUri());
     }
 
     public function test_remove_from_whitelist(): void
@@ -151,7 +153,7 @@ class ServerBuilderTest extends TestCase
         $result = $vf->server(69)->addIpv4Quantity(['quantity' => 2]);
 
         $this->assertTrue($result->success);
-        $this->assertStringContainsString('/servers/69/ipv4/quantity', $this->lastRequestUri());
+        $this->assertStringContainsString('/servers/69/ipv4Qty', $this->lastRequestUri());
     }
 
     public function test_remove_ipv4(): void
@@ -172,7 +174,7 @@ class ServerBuilderTest extends TestCase
 
         $this->assertTrue($result->success);
         $this->assertSame('PUT', $this->lastRequestMethod());
-        $this->assertStringContainsString('/servers/69/traffic', $this->lastRequestUri());
+        $this->assertStringContainsString('/servers/69/modify/traffic', $this->lastRequestUri());
     }
 
     public function test_firewall_returns_sub_builder(): void
@@ -200,5 +202,135 @@ class ServerBuilderTest extends TestCase
         $server = $vf->server(69)->get();
 
         $this->assertArrayHasKey('id', $server->raw);
+    }
+
+    public function test_suspend(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('action-success.json'));
+
+        $result = $vf->server(69)->suspend();
+
+        $this->assertTrue($result->success);
+        $this->assertStringContainsString('/servers/69/suspend', $this->lastRequestUri());
+    }
+
+    public function test_unsuspend(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('action-success.json'));
+
+        $result = $vf->server(69)->unsuspend();
+
+        $this->assertTrue($result->success);
+        $this->assertStringContainsString('/servers/69/unsuspend', $this->lastRequestUri());
+    }
+
+    public function test_modify_name(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('action-success.json'));
+
+        $result = $vf->server(69)->modifyName('new-name');
+
+        $this->assertTrue($result->success);
+        $this->assertSame('new-name', $this->lastRequestBody()['name']);
+        $this->assertStringContainsString('/servers/69/modify/name', $this->lastRequestUri());
+    }
+
+    public function test_modify_cpu_cores(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('action-success.json'));
+
+        $result = $vf->server(69)->modifyCpuCores(4);
+
+        $this->assertTrue($result->success);
+        $this->assertSame(4, $this->lastRequestBody()['cores']);
+    }
+
+    public function test_modify_cpu_throttle(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('action-success.json'));
+
+        $result = $vf->server(69)->modifyCpuThrottle(50, sync: true);
+
+        $this->assertTrue($result->success);
+        $this->assertSame(50, $this->lastRequestBody()['percent']);
+    }
+
+    public function test_modify_memory(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('action-success.json'));
+
+        $result = $vf->server(69)->modifyMemory(2048);
+
+        $this->assertTrue($result->success);
+        $this->assertSame(2048, $this->lastRequestBody()['memory']);
+    }
+
+    public function test_change_owner(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('action-success.json'));
+
+        $result = $vf->server(69)->changeOwner(42);
+
+        $this->assertTrue($result->success);
+        $this->assertStringContainsString('/servers/69/owner/42', $this->lastRequestUri());
+    }
+
+    public function test_reset_password(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('reset-password.json'));
+
+        $result = $vf->server(69)->resetPassword('root', false);
+
+        $this->assertSame(42, $result['queueId']);
+        $this->assertSame('newpass123', $result['expectedPassword']);
+        $this->assertSame('root', $this->lastRequestBody()['user']);
+    }
+
+    public function test_custom_xml(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('action-success.json'));
+
+        $result = $vf->server(69)->customXml(['domain' => '<xml/>']);
+
+        $this->assertTrue($result->success);
+        $this->assertStringContainsString('/servers/69/customXML', $this->lastRequestUri());
+    }
+
+    public function test_traffic(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('traffic-stats.json'));
+
+        $result = $vf->server(69)->traffic();
+
+        $this->assertArrayHasKey('monthly', $result);
+        $this->assertStringContainsString('/servers/69/traffic', $this->lastRequestUri());
+    }
+
+    public function test_vnc(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('vnc.json'));
+
+        $result = $vf->server(69)->vnc();
+
+        $this->assertArrayHasKey('vnc', $result);
+        $this->assertTrue($result['vnc']['enabled']);
+    }
+
+    public function test_enable_vnc(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('vnc.json'));
+
+        $result = $vf->server(69)->enableVnc();
+
+        $this->assertSame('enable', $this->lastRequestBody()['action']);
+    }
+
+    public function test_disable_vnc(): void
+    {
+        $vf = $this->mockClient($this->jsonResponse('vnc.json'));
+
+        $result = $vf->server(69)->disableVnc();
+
+        $this->assertSame('disable', $this->lastRequestBody()['action']);
     }
 }

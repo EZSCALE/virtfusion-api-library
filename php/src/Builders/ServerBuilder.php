@@ -23,33 +23,37 @@ class ServerBuilder
         return Server::fromArray($data['data'] ?? $data);
     }
 
+    // --- Power ---
+
     public function boot(): ActionResult
     {
-        $data = $this->http->request('POST', "servers/{$this->serverId}/boot");
+        $data = $this->http->request('POST', "servers/{$this->serverId}/power/boot");
 
         return ActionResult::fromArray($data);
     }
 
     public function shutdown(): ActionResult
     {
-        $data = $this->http->request('POST', "servers/{$this->serverId}/shutdown");
+        $data = $this->http->request('POST', "servers/{$this->serverId}/power/shutdown");
 
         return ActionResult::fromArray($data);
     }
 
     public function restart(): ActionResult
     {
-        $data = $this->http->request('POST', "servers/{$this->serverId}/restart");
+        $data = $this->http->request('POST', "servers/{$this->serverId}/power/restart");
 
         return ActionResult::fromArray($data);
     }
 
     public function powerOff(): ActionResult
     {
-        $data = $this->http->request('POST', "servers/{$this->serverId}/power-off");
+        $data = $this->http->request('POST', "servers/{$this->serverId}/power/poweroff");
 
         return ActionResult::fromArray($data);
     }
+
+    // --- Lifecycle ---
 
     public function delete(int $delay = 0): ActionResult
     {
@@ -72,19 +76,68 @@ class ServerBuilder
         return ActionResult::fromArray($data);
     }
 
+    public function suspend(): ActionResult
+    {
+        $data = $this->http->request('POST', "servers/{$this->serverId}/suspend");
+
+        return ActionResult::fromArray($data);
+    }
+
+    public function unsuspend(): ActionResult
+    {
+        $data = $this->http->request('POST', "servers/{$this->serverId}/unsuspend");
+
+        return ActionResult::fromArray($data);
+    }
+
+    // --- Modification ---
+
     public function changePackage(int $packageId): ActionResult
     {
-        $data = $this->http->request('POST', "servers/{$this->serverId}/change-package", [
-            'json' => ['packageId' => $packageId],
-        ]);
+        $data = $this->http->request('PUT', "servers/{$this->serverId}/package/{$packageId}");
 
         return ActionResult::fromArray($data);
     }
 
     public function modifyBackupPlan(int $planId): ActionResult
     {
-        $data = $this->http->request('POST', "servers/{$this->serverId}/backup-plan", [
-            'json' => ['planId' => $planId],
+        $data = $this->http->request('PUT', "servers/{$this->serverId}/backups/plan/{$planId}");
+
+        return ActionResult::fromArray($data);
+    }
+
+    public function modifyName(string $name): ActionResult
+    {
+        $data = $this->http->request('PUT', "servers/{$this->serverId}/modify/name", [
+            'json' => ['name' => $name],
+        ]);
+
+        return ActionResult::fromArray($data);
+    }
+
+    public function modifyCpuCores(int $cores): ActionResult
+    {
+        $data = $this->http->request('PUT', "servers/{$this->serverId}/modify/cpuCores", [
+            'json' => ['cores' => $cores],
+        ]);
+
+        return ActionResult::fromArray($data);
+    }
+
+    public function modifyCpuThrottle(int $percent, bool $sync = false): ActionResult
+    {
+        $data = $this->http->request('PUT', "servers/{$this->serverId}/modify/cpuThrottle", [
+            'query' => ['sync' => $sync ? 'true' : 'false'],
+            'json' => ['percent' => $percent],
+        ]);
+
+        return ActionResult::fromArray($data);
+    }
+
+    public function modifyMemory(int $memoryMb): ActionResult
+    {
+        $data = $this->http->request('PUT', "servers/{$this->serverId}/modify/memory", [
+            'json' => ['memory' => $memoryMb],
         ]);
 
         return ActionResult::fromArray($data);
@@ -93,9 +146,58 @@ class ServerBuilder
     /**
      * @param array<string, mixed> $params
      */
+    public function modifyTraffic(array $params): ActionResult
+    {
+        $data = $this->http->request('PUT', "servers/{$this->serverId}/modify/traffic", [
+            'json' => $params,
+        ]);
+
+        return ActionResult::fromArray($data);
+    }
+
+    public function changeOwner(int $newOwnerId): ActionResult
+    {
+        $data = $this->http->request('PUT', "servers/{$this->serverId}/owner/{$newOwnerId}");
+
+        return ActionResult::fromArray($data);
+    }
+
+    // --- Password ---
+
+    /**
+     * @return array<string, mixed> Contains queueId and expectedPassword
+     */
+    public function resetPassword(string $user = 'root', bool $sendMail = true): array
+    {
+        $data = $this->http->request('POST', "servers/{$this->serverId}/resetPassword", [
+            'json' => ['user' => $user, 'sendMail' => $sendMail],
+        ]);
+
+        return $data['data'] ?? $data;
+    }
+
+    // --- Custom XML ---
+
+    /**
+     * @param array<string, mixed> $params
+     */
+    public function customXml(array $params): ActionResult
+    {
+        $data = $this->http->request('POST', "servers/{$this->serverId}/customXML", [
+            'json' => $params,
+        ]);
+
+        return ActionResult::fromArray($data);
+    }
+
+    // --- Network ---
+
+    /**
+     * @param array<string, mixed> $params
+     */
     public function addToWhitelist(array $params): ActionResult
     {
-        $data = $this->http->request('POST', "servers/{$this->serverId}/whitelist", [
+        $data = $this->http->request('POST', "servers/{$this->serverId}/networkWhitelist", [
             'json' => $params,
         ]);
 
@@ -107,7 +209,7 @@ class ServerBuilder
      */
     public function removeFromWhitelist(array $params): ActionResult
     {
-        $data = $this->http->request('DELETE', "servers/{$this->serverId}/whitelist", [
+        $data = $this->http->request('DELETE', "servers/{$this->serverId}/networkWhitelist", [
             'json' => $params,
         ]);
 
@@ -131,7 +233,7 @@ class ServerBuilder
      */
     public function addIpv4Quantity(array $params): ActionResult
     {
-        $data = $this->http->request('POST', "servers/{$this->serverId}/ipv4/quantity", [
+        $data = $this->http->request('POST', "servers/{$this->serverId}/ipv4Qty", [
             'json' => $params,
         ]);
 
@@ -150,17 +252,67 @@ class ServerBuilder
         return ActionResult::fromArray($data);
     }
 
+    // --- Traffic ---
+
     /**
-     * @param array<string, mixed> $params
+     * @return array<string, mixed>
      */
-    public function modifyTraffic(array $params): ActionResult
+    public function traffic(): array
     {
-        $data = $this->http->request('PUT', "servers/{$this->serverId}/traffic", [
-            'json' => $params,
+        $data = $this->http->request('GET', "servers/{$this->serverId}/traffic");
+
+        return $data['data'] ?? $data;
+    }
+
+    // --- Templates ---
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function templates(): array
+    {
+        $data = $this->http->request('GET', "servers/{$this->serverId}/templates");
+
+        return $data['data'] ?? [];
+    }
+
+    // --- VNC ---
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function vnc(): array
+    {
+        $data = $this->http->request('GET', "servers/{$this->serverId}/vnc");
+
+        return $data['data'] ?? $data;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function enableVnc(): array
+    {
+        $data = $this->http->request('POST', "servers/{$this->serverId}/vnc", [
+            'json' => ['action' => 'enable'],
         ]);
 
-        return ActionResult::fromArray($data);
+        return $data['data'] ?? $data;
     }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function disableVnc(): array
+    {
+        $data = $this->http->request('POST', "servers/{$this->serverId}/vnc", [
+            'json' => ['action' => 'disable'],
+        ]);
+
+        return $data['data'] ?? $data;
+    }
+
+    // --- Sub-builders ---
 
     public function firewall(string $interface): ServerFirewallBuilder
     {

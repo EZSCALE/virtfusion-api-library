@@ -22,7 +22,7 @@ class ServerTrafficBlocksBuilderTest extends TestCase
         $this->assertSame('1.2.3.4', $blocks[0]->ip);
         $this->assertSame('Abuse', $blocks[0]->reason);
         $this->assertNull($blocks[1]->reason);
-        $this->assertStringContainsString('/servers/69/traffic-blocks', $this->lastRequestUri());
+        $this->assertStringContainsString('/servers/69/traffic/blocks', $this->lastRequestUri());
     }
 
     public function test_add(): void
@@ -45,6 +45,6 @@ class ServerTrafficBlocksBuilderTest extends TestCase
 
         $this->assertTrue($result->success);
         $this->assertSame('DELETE', $this->lastRequestMethod());
-        $this->assertStringContainsString('/traffic-blocks/42', $this->lastRequestUri());
+        $this->assertStringContainsString('/traffic/blocks/42', $this->lastRequestUri());
     }
 }

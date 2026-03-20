@@ -17,7 +17,7 @@ class HypervisorGroupsBuilder
 
     public function list(int $page = 1): PaginatedResponse
     {
-        $data = $this->http->request('GET', 'hypervisor-groups', [
+        $data = $this->http->request('GET', 'compute/hypervisors/groups', [
             'query' => ['page' => $page],
         ]);
 

@@ -1,0 +1,11 @@
+{
+    "data": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "extRelationId": 100,
+        "suspended": false,
+        "selfService": 0,
+        "password": "generated123"
+    }
+}

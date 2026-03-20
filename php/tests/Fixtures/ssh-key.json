@@ -1,0 +1,9 @@
+{
+    "data": {
+        "id": 1,
+        "name": "my-key",
+        "publicKey": "ssh-rsa AAAA...",
+        "type": "rsa",
+        "enabled": true
+    }
+}

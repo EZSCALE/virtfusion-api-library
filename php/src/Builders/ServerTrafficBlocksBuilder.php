@@ -23,7 +23,7 @@ class ServerTrafficBlocksBuilder
     {
         $data = $this->http->request(
             'GET',
-            "servers/{$this->serverId}/traffic-blocks",
+            "servers/{$this->serverId}/traffic/blocks",
         );
 
         return array_map(
@@ -39,7 +39,7 @@ class ServerTrafficBlocksBuilder
     {
         $data = $this->http->request(
             'POST',
-            "servers/{$this->serverId}/traffic-blocks",
+            "servers/{$this->serverId}/traffic/blocks",
             ['json' => $params],
         );
 
@@ -50,7 +50,7 @@ class ServerTrafficBlocksBuilder
     {
         $data = $this->http->request(
             'DELETE',
-            "servers/{$this->serverId}/traffic-blocks/{$blockId}",
+            "servers/{$this->serverId}/traffic/blocks/{$blockId}",
         );
 
         return ActionResult::fromArray($data);

@@ -19,14 +19,14 @@ class HypervisorGroupBuilder
 
     public function get(): HypervisorGroup
     {
-        $data = $this->http->request('GET', "hypervisor-groups/{$this->groupId}");
+        $data = $this->http->request('GET', "compute/hypervisors/groups/{$this->groupId}");
 
         return HypervisorGroup::fromArray($data['data'] ?? $data);
     }
 
     public function resources(int $page = 1): PaginatedResponse
     {
-        $data = $this->http->request('GET', "hypervisor-groups/{$this->groupId}/resources", [
+        $data = $this->http->request('GET', "compute/hypervisors/groups/{$this->groupId}/resources", [
             'query' => ['page' => $page],
         ]);
 
