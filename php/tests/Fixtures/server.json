@@ -1,0 +1,10 @@
+{
+    "data": {
+        "id": 69,
+        "name": "web1",
+        "hostname": "web1.example.com",
+        "state": "running",
+        "packageId": 5,
+        "primaryIp": "10.0.0.1"
+    }
+}

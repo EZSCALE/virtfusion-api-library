@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace EZScale\VirtFusion\Builders;
+
+use EZScale\VirtFusion\DataObjects\HypervisorGroup;
+use EZScale\VirtFusion\DataObjects\PaginatedResponse;
+use EZScale\VirtFusion\HttpClient;
+
+class HypervisorGroupsBuilder
+{
+    public function __construct(
+        private readonly HttpClient $http,
+    ) {
+    }
+
+    public function list(int $page = 1): PaginatedResponse
+    {
+        $data = $this->http->request('GET', 'hypervisor-groups', [
+            'query' => ['page' => $page],
+        ]);
+
+        return PaginatedResponse::fromArray(
+            $data,
+            fn(array $item) => HypervisorGroup::fromArray($item),
+        );
+    }
+
+    public function group(int $id): HypervisorGroupBuilder
+    {
+        return new HypervisorGroupBuilder($this->http, $id);
+    }
+}

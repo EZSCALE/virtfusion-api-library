@@ -1,0 +1,22 @@
+{
+    "data": {
+        "enabled": true,
+        "interface": "primary",
+        "rules": [
+            {
+                "id": 1,
+                "action": "accept",
+                "protocol": "tcp",
+                "port": "22",
+                "source": null
+            },
+            {
+                "id": 2,
+                "action": "accept",
+                "protocol": "tcp",
+                "port": "80",
+                "source": "0.0.0.0/0"
+            }
+        ]
+    }
+}
