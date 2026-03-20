@@ -1,0 +1,7 @@
+{
+    "message": "Validation failed",
+    "errors": {
+        "name": ["The name field is required."],
+        "packageId": ["The package id field is required."]
+    }
+}

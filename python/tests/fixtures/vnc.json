@@ -1,0 +1,15 @@
+{
+    "data": {
+        "vnc": {
+            "ip": "10.0.0.1",
+            "hostname": null,
+            "port": 5900,
+            "password": "secret",
+            "wss": {
+                "token": "abc-123",
+                "url": "wss://vnc.example.com"
+            },
+            "enabled": true
+        }
+    }
+}

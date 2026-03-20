@@ -13,3 +13,14 @@ Thumbs.db
 /php/composer.lock
 /php/.phpunit.result.cache
 /php/.phpunit.cache/
+
+# Python
+/python/.venv/
+/python/__pycache__/
+/python/src/**/__pycache__/
+/python/tests/**/__pycache__/
+/python/*.egg-info/
+/python/src/*.egg-info/
+/python/dist/
+/python/build/
+*.pyc

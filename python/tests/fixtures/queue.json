@@ -1,0 +1,13 @@
+{
+    "data": {
+        "id": 42,
+        "jobId": "abc-123",
+        "job": "ServerBuild",
+        "hypervisorId": 1,
+        "serverId": 69,
+        "action": "build",
+        "queue": "default",
+        "progress": 75,
+        "failed": false
+    }
+}

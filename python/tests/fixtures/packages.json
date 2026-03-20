@@ -1,0 +1,24 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Starter",
+            "description": "Basic plan",
+            "enabled": true,
+            "memory": 1024,
+            "primaryStorage": 20,
+            "traffic": 1000,
+            "cpuCores": 1
+        },
+        {
+            "id": 2,
+            "name": "Pro",
+            "description": null,
+            "enabled": true,
+            "memory": 4096,
+            "primaryStorage": 80,
+            "traffic": 5000,
+            "cpuCores": 4
+        }
+    ]
+}

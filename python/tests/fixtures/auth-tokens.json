@@ -1,0 +1,16 @@
+{
+    "data": {
+        "authentication": {
+            "tokens": {
+                "1": "token-abc",
+                "2": "token-def"
+            },
+            "endpoint": "https://cp.example.com",
+            "endpoint_complete": "https://cp.example.com/login",
+            "expiry": {
+                "ttl": 3600,
+                "expires": "2026-03-19T12:00:00Z"
+            }
+        }
+    }
+}

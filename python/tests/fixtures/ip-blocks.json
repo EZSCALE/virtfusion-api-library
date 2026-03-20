@@ -1,0 +1,22 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Primary Block",
+            "type": 1,
+            "enabled": true,
+            "ipv4": {
+                "gateway": "10.0.0.1",
+                "netmask": "255.255.255.0",
+                "total": 254,
+                "usedTotal": 10,
+                "freeTotal": 244
+            },
+            "ipv6": {}
+        }
+    ],
+    "current_page": 1,
+    "last_page": 1,
+    "per_page": 20,
+    "total": 1
+}
